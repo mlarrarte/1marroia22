@@ -51,9 +51,9 @@ public class FlightBooking extends JFrame {
 
 	private JTextField year = null;
 	
-	private JRadioButton tripleRooms = null;
-	private JRadioButton doubleRooms = null;
-	private JRadioButton singleRooms = null;
+	private JRadioButton bussinesTicket = null;
+	private JRadioButton firstTicket = null;
+	private JRadioButton touristTicket = null;
 
 	private ButtonGroup fareButtonGroup = new ButtonGroup();  
 	
@@ -181,21 +181,21 @@ public class FlightBooking extends JFrame {
 		
 		
 		
-		tripleRooms = new JRadioButton("Business");
-		tripleRooms.setSelected(true);
-		fareButtonGroup.add(tripleRooms);
-		tripleRooms.setBounds(99, 86, 101, 23);
-		contentPane.add(tripleRooms);
+		bussinesTicket = new JRadioButton("Business");
+		bussinesTicket.setSelected(true);
+		fareButtonGroup.add(bussinesTicket);
+		bussinesTicket.setBounds(99, 86, 101, 23);
+		contentPane.add(bussinesTicket);
 		
-		doubleRooms = new JRadioButton("First");
-		fareButtonGroup.add(doubleRooms);
-		doubleRooms.setBounds(192, 86, 77, 23);
-		contentPane.add(doubleRooms);
+		firstTicket = new JRadioButton("First");
+		fareButtonGroup.add(firstTicket);
+		firstTicket.setBounds(192, 86, 77, 23);
+		contentPane.add(firstTicket);
 		
-		singleRooms = new JRadioButton("Tourist");
-		fareButtonGroup.add(singleRooms);
-		singleRooms.setBounds(271, 86, 77, 23);
-		contentPane.add(singleRooms);
+		touristTicket = new JRadioButton("Tourist");
+		fareButtonGroup.add(touristTicket);
+		touristTicket.setBounds(271, 86, 77, 23);
+		contentPane.add(touristTicket);
 		
 		lookforFlights = new JButton("Look for Concrete Flights");
 		lookforFlights.addActionListener(new ActionListener() {
@@ -249,15 +249,15 @@ public class FlightBooking extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int num=0;
 				boolean error=false;
-				if (tripleRooms.isSelected()) { 
+				if (bussinesTicket.isSelected()) { 
 					num=selectedConcreteFlight.getBusinessNumber();
 					if (num>0) selectedConcreteFlight.setBusinessNumber(num-1); else error=true; 
 				}
-				else if (doubleRooms.isSelected()) {
+				else if (firstTicket.isSelected()) {
 					num=selectedConcreteFlight.getFirstNumber();
 					if (num>0) selectedConcreteFlight.setFirstNumber(num-1); else error=true;
 				}
-				else if (singleRooms.isSelected()) {
+				else if (touristTicket.isSelected()) {
 					num=selectedConcreteFlight.getTouristNumber();
 					if (num>0) selectedConcreteFlight.setTouristNumber(num-1); else error=true;
 				}
