@@ -40,8 +40,8 @@ public void setArrivingCity(String arrivingCity) {
 	this.arrivingCity = arrivingCity;
 }
 
-public void addConcreteFlight(String concreteFlighCode, Date date, int businessNumber, int touristNumber, int firstNumber, String time){
-	ConcreteFlight cf=new ConcreteFlight(concreteFlighCode,date,businessNumber,touristNumber,firstNumber,time, this);
+public void addConcreteFlight(String concreteFlighCode, Date date, int businessNumber, int firstNumber, int touristNumber, String time){
+	ConcreteFlight cf=new ConcreteFlight(concreteFlighCode,date, businessNumber,firstNumber,touristNumber,time, this);
 	concreteFlights.add(cf);
 }
 
