@@ -223,8 +223,6 @@ public class FlightBooking extends JFrame {
 		contentPane.add(jLabelResult);
 		
 		flightList = new JList<ConcreteFlight>();
-		//flightList.setBounds(64, 199, 336, 71);
-		contentPane.add(flightList);
 		flightList.setModel(flightInfo);
 		flightList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
 			public void valueChanged(javax.swing.event.ListSelectionEvent e) {
