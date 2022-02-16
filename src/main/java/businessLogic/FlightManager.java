@@ -26,9 +26,9 @@ ArrayList<Flight> flightsDB;
 																								
 			
 			Flight f2 = new Flight("F2","Bilbo","Donostia");
-			f2.addConcreteFlight("CF1",newDate(2022,1,21),3,3,0,"12:00");
-			f2.addConcreteFlight("CF2",newDate(2022,1,22),3,3,0,"12:00");
-			f2.addConcreteFlight("CF3",newDate(2022,1,23),3,3,0,"12:00");
+			f2.addConcreteFlight("CF8",newDate(2022,1,21),3,3,0,"12:00");
+			f2.addConcreteFlight("CF9",newDate(2022,1,22),3,3,0,"12:00");
+			f2.addConcreteFlight("CF10",newDate(2022,1,23),3,3,0,"12:00");
 
 			
 			flightsDB.add(f1);	
