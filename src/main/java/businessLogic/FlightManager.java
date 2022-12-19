@@ -31,34 +31,76 @@ ArrayList<Flight> flightsDB;
 			f1.addConcreteFlight("CF1-5",newDate(2023,1,23),3,3,0,"15:00");
 			f1.addConcreteFlight("CF1-6",newDate(2023,1,23),3,3,0,"16:00");
 			f1.addConcreteFlight("CF1-7",newDate(2023,1,23),3,3,0,"17:00");
-					
+			
+			
 			Flight f2 = new Flight("F2","Donostia","Madrid");
 			
-			Flight f3 = new Flight("F3","Barcelona","Madrid");
-			Flight f4 = new Flight("F4","Sevilla","Madrid");
-			Flight f5 = new Flight("F5","Barcelona","Madrid");
-
+			f2.addConcreteFlight("CF2-1",newDate(2023,1,22),1,2,3,"12:00");
+			f2.addConcreteFlight("CF2-2",newDate(2023,1,23),3,0,3,"12:00");
+			f2.addConcreteFlight("CF2-3",newDate(2023,1,23),1,2,2,"13:00");
+			f2.addConcreteFlight("CF2-4",newDate(2023,1,23),3,3,0,"14:00");
+			f2.addConcreteFlight("CF2-5",newDate(2023,1,23),3,3,0,"15:00");
+			f2.addConcreteFlight("CF2-6",newDate(2023,1,23),3,3,0,"16:00");
+			f2.addConcreteFlight("CF2-7",newDate(2023,1,23),3,3,0,"17:00");
 			
-
-
 			
-			Flight f21 = new Flight("F21","Bilbo","Donostia");
-			f21.addConcreteFlight("CF21-1",newDate(2023,1,21),3,3,0,"12:00");
-			f21.addConcreteFlight("CF21-2",newDate(2023,1,22),3,3,0,"12:00");
-			f21.addConcreteFlight("CF21-3",newDate(2023,1,23),3,3,0,"12:00");
-
+			
+					
+			Flight f3 = new Flight("F3","Barcelona","Donostia");
+			
+			f3.addConcreteFlight("CF3-1",newDate(2023,1,22),1,2,3,"10:00");
+			f3.addConcreteFlight("CF3-2",newDate(2023,1,23),3,0,3,"11:00");
+			f3.addConcreteFlight("CF3-3",newDate(2023,1,23),1,2,2,"12:00");
+			f3.addConcreteFlight("CF3-4",newDate(2023,1,23),3,3,0,"13:00");
+			f3.addConcreteFlight("CF3-5",newDate(2023,1,23),3,3,0,"15:00");
+			f3.addConcreteFlight("CF3-6",newDate(2023,1,23),3,3,0,"19:00");
+			f3.addConcreteFlight("CF3-7",newDate(2023,1,23),3,3,0,"21:00");
+			
+			
+			Flight f4 = new Flight("F4","Barcelona","Malaga");
+			
+			
+			f4.addConcreteFlight("CF4-1",newDate(2023,1,22),1,2,3,"9:00");
+			f4.addConcreteFlight("CF4-2",newDate(2023,1,23),3,0,3,"11:00");
+			f4.addConcreteFlight("CF4-3",newDate(2023,1,23),1,2,2,"13:00");
+			f4.addConcreteFlight("CF4-4",newDate(2023,1,23),3,3,0,"15:00");
+			f4.addConcreteFlight("CF4-5",newDate(2023,1,23),3,3,0,"17:00");
+			f4.addConcreteFlight("CF4-6",newDate(2023,1,23),3,3,0,"19:00");
+			f4.addConcreteFlight("CF4-7",newDate(2023,1,23),3,3,0,"21:00");
+			
+			
+			
+			Flight f5 = new Flight("F5","Sevilla","Madrid");
+			
+			f5.addConcreteFlight("CF5-1",newDate(2023,1,22),1,2,3,"8:00");
+			f5.addConcreteFlight("CF5-2",newDate(2023,1,23),3,0,3,"10:00");
+			f5.addConcreteFlight("CF5-3",newDate(2023,1,23),1,2,2,"12:00");
+			f5.addConcreteFlight("CF5-4",newDate(2023,1,23),3,3,0,"14:00");
+			f5.addConcreteFlight("CF5-5",newDate(2023,1,23),3,3,0,"16:00");
+			f5.addConcreteFlight("CF5-6",newDate(2023,1,23),3,3,0,"18:00");
+			f5.addConcreteFlight("CF5-7",newDate(2023,1,23),3,3,0,"20:00");
+			
+			
+			Flight f6 = new Flight("F6","Sevilla","Santander");
+			
+			f6.addConcreteFlight("CF6-1",newDate(2023,1,22),1,2,3,"8:30");
+			f6.addConcreteFlight("CF6-2",newDate(2023,1,23),3,0,3,"10:30");
+			f6.addConcreteFlight("CF6-3",newDate(2023,1,23),1,2,2,"12:30");
+			f6.addConcreteFlight("CF6-4",newDate(2023,1,23),3,3,0,"14:30");
+			f6.addConcreteFlight("CF6-5",newDate(2023,1,23),3,3,0,"16:30");
+			f6.addConcreteFlight("CF6-6",newDate(2023,1,23),3,3,0,"18:30");
+			f6.addConcreteFlight("CF6-7",newDate(2023,1,23),3,3,0,"20:30");
+			
+			Flight f7 = new Flight("F7","Sevilla","Granada");
 
 			flightsDB.add(f1);
 			flightsDB.add(f2);
 			flightsDB.add(f3);
 			flightsDB.add(f4);
 			flightsDB.add(f5);
-			
+			flightsDB.add(f6);
+			flightsDB.add(f7);
 
-			flightsDB.add(f21);	
-			
-			System.out.println(getAllDepartingCities());
-			System.out.println(getArrivalCitiesFrom("Donostia"));
 			
 		}
 		public Collection<ConcreteFlight> getConcreteFlights(String departingCity, String arrivingCity, Date date) {

@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -28,6 +29,8 @@ import javax.swing.JList;
 import javax.swing.border.EmptyBorder;
 
 import domain.ConcreteFlight;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class FlightBooking23 extends JFrame {
 	
@@ -122,7 +125,7 @@ public class FlightBooking23 extends JFrame {
 		
 		setTitle("Book Flight");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 350);
+		setBounds(100, 100, 480, 479);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -131,11 +134,41 @@ public class FlightBooking23 extends JFrame {
 		lblDepartCity.setBounds(21, 11, 103, 16);
 		contentPane.add(lblDepartCity);
 		
-		departComboBox = new JComboBox();
+		departComboBox = new JComboBox<String>();
+		departComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				System.out.println("Entra state change");
+				arrivalCities.removeAllElements();
+				List<String> aCities=businessLogic.getArrivalCitiesFrom((String)departComboBox.getSelectedItem());
+			    for(String aciti:aCities) {
+			    	System.out.println(aciti);
+			    	arrivalCities.addElement(aciti);
+			    }
+			    
+				
+			}
+		});
 		departComboBox.setBounds(109, 7, 243, 27);
 		contentPane.add(departComboBox);
-		departCities.addAll(businessLogic.getAllDepartingCities());
+		List<String> cities=businessLogic.getAllDepartingCities();
+	    for(String citi:cities)
+	    	departCities.addElement(citi);
+		//departCities.addAll(businessLogic.getAllDepartingCities());
 		departComboBox.setModel(departCities);
+		
+		arrivalComboBox = new JComboBox<String>();
+		arrivalComboBox.setBounds(99, 35, 243, 27);
+		contentPane.add(arrivalComboBox);
+		
+		List<String> aCities=businessLogic.getArrivalCitiesFrom((String)departComboBox.getSelectedItem());
+	    for(String aciti:aCities) {
+	    	System.out.println(aciti);
+	    	arrivalCities.addElement(aciti);
+	    }
+		//departCities.addAll(businessLogic.getAllDepartingCities());
+		arrivalComboBox.setModel(arrivalCities);
+		
+		
 		
 		lblYear.setBounds(21, 62, 33, 16);
 		contentPane.add(lblYear);
@@ -171,25 +204,55 @@ public class FlightBooking23 extends JFrame {
 		contentPane.add(day);
 		day.setColumns(10);
 		
-		lblRoomType.setBounds(21, 90, 84, 16);
+		lblRoomType.setBounds(21, 252, 84, 16);
 		contentPane.add(lblRoomType);
 		
 		
 		
 		bussinesTicket = new JRadioButton("Business");
-		bussinesTicket.setSelected(true);
+		bussinesTicket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (selectedConcreteFlight.getBusinessNumber()>0) {
+					 bookFlight.setEnabled(true);
+					 bookFlight.setText("Book: "+selectedConcreteFlight);
+				}
+			}
+		});
+		//bussinesTicket.setSelected(true);
+		
 		fareButtonGroup.add(bussinesTicket);
-		bussinesTicket.setBounds(99, 86, 101, 23);
+		bussinesTicket.setBounds(86, 248, 101, 23);
+		bussinesTicket.setEnabled(false);
+		
 		contentPane.add(bussinesTicket);
 		
 		firstTicket = new JRadioButton("First");
+		firstTicket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (selectedConcreteFlight.getFirstNumber()>0) {
+					 bookFlight.setEnabled(true);
+					 bookFlight.setText("Book: "+selectedConcreteFlight);
+				}
+			}
+		});
 		fareButtonGroup.add(firstTicket);
-		firstTicket.setBounds(192, 86, 77, 23);
+		firstTicket.setBounds(177, 248, 77, 23);
+		firstTicket.setEnabled(false);
 		contentPane.add(firstTicket);
 		
 		touristTicket = new JRadioButton("Tourist");
+		touristTicket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (selectedConcreteFlight.getTouristNumber()>0) {
+					 bookFlight.setEnabled(true);
+					 bookFlight.setText("Book: "+selectedConcreteFlight);
+				}
+			}
+		});
+		
 		fareButtonGroup.add(touristTicket);
-		touristTicket.setBounds(271, 86, 77, 23);
+		touristTicket.setBounds(247, 248, 77, 23);
+		touristTicket.setEnabled(false);
 		contentPane.add(touristTicket);
 		
 		lookforFlights = new JButton("Look for Concrete Flights");
@@ -201,7 +264,7 @@ public class FlightBooking23 extends JFrame {
 				
 				java.util.Date date =newDate(Integer.parseInt(year.getText()),months.getSelectedIndex(),Integer.parseInt(day.getText()));
 				 
-				concreteFlightCollection=businessLogic.getConcreteFlights(departCity.getText(),arrivalCity.getText(),date);
+				concreteFlightCollection=businessLogic.getConcreteFlights((String)departComboBox.getSelectedItem(),(String)arrivalComboBox.getSelectedItem(),date);
 				for (ConcreteFlight f : concreteFlightCollection) { 
 					System.out.println(f.toString());
 					flightInfo.addElement(f); 
@@ -210,30 +273,37 @@ public class FlightBooking23 extends JFrame {
 				else searchResult.setText("Choose an available flight in this list:");
 			}
 		});
-		lookforFlights.setBounds(86, 118, 261, 40);
+		lookforFlights.setBounds(91, 90, 261, 40);
 		contentPane.add(lookforFlights);	
 		
 		jLabelResult = new JLabel("");
-		jLabelResult.setBounds(109, 180, 243, 16);
+		jLabelResult.setBounds(109, 142, 243, 16);
 		contentPane.add(jLabelResult);
 		
 		flightList = new JList<ConcreteFlight>();
 		flightList.setModel(flightInfo);
 		flightList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
 			public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-				if (e.getValueIsAdjusting()) return; // El evento se dispara dos veces: antes de cambiar el valor y una vez cambiado
-													 // Interesa s�lo actuar una vez cambiado
-				if (!flightList.isSelectionEmpty()){ // A este m�todo se le llama tambi�n cuando se hace un clear del JList, 
-													 // por lo que podr�a estar la selecci�n vac�a y dar un error
+				if (e.getValueIsAdjusting()) return; // The event is activated twice: Before the value is changed, and after changed 
+				 									// We need to act only after changed 
+				if (!flightList.isSelectionEmpty()){ // This method is also invoked when a clear in a Jlist is done. 
+													 // and the list could be empty and make an a error.
 					selectedConcreteFlight = (ConcreteFlight) flightList.getSelectedValue();
-					bookFlight.setEnabled(true);
-					bookFlight.setText("Book this flight: "+selectedConcreteFlight);  // TODO Auto-generated Event stub valueChanged()
+					
+				    bussinesTicket.setEnabled(selectedConcreteFlight.getBusinessNumber()>0);
+				    firstTicket.setEnabled(selectedConcreteFlight.getFirstNumber()>0);
+				    touristTicket.setEnabled(selectedConcreteFlight.getTouristNumber()>0);
+					
+					//bookFlight.setEnabled(true);
+				    
+				    
+					//bookFlight.setText("Book: "+selectedConcreteFlight);  // TODO Auto-generated Event stub valueChanged()
 				}
 			}
 		});
 		
-		flightListScrollPane.setBounds(new Rectangle(64, 199, 336, 71));
-		flightListScrollPane.setViewportView(flightList);
+		flightListScrollPane.setBounds(new Rectangle(44, 159, 336, 71));
+		flightListScrollPane.setColumnHeaderView(flightList);
 		contentPane.add(flightListScrollPane);
 		
 		
@@ -244,26 +314,33 @@ public class FlightBooking23 extends JFrame {
 				boolean error=false;
 				if (bussinesTicket.isSelected()) { 
 					num=selectedConcreteFlight.getBusinessNumber();
-					if (num>0) selectedConcreteFlight.setBusinessNumber(num-1); else error=true; 
-				}
+					if (num>0) selectedConcreteFlight.setBusinessNumber(num-1);  
+				}	
 				else if (firstTicket.isSelected()) {
 					num=selectedConcreteFlight.getFirstNumber();
-					if (num>0) selectedConcreteFlight.setFirstNumber(num-1); else error=true;
+					if (num>0) selectedConcreteFlight.setFirstNumber(num-1); 
+
 				}
 				else if (touristTicket.isSelected()) {
 					num=selectedConcreteFlight.getTouristNumber();
-					if (num>0) selectedConcreteFlight.setTouristNumber(num-1); else error=true;
+					if (num>0) selectedConcreteFlight.setTouristNumber(num-1); 
 				}
-				if (error) bookFlight.setText("Error: There were no seats available!");
-				else bookFlight.setText("Booked. #seat left: "+(num-1));
+				fareButtonGroup.clearSelection();
+				flightInfo.clear();
+				bussinesTicket.setEnabled(false);
+				firstTicket.setEnabled(false);
+				touristTicket.setEnabled(false);
+
+
+				bookFlight.setText("Booked. #seat left: "+(num-1));
 				bookFlight.setEnabled(false);
 			}
 		});
-		bookFlight.setBounds(21, 282, 399, 40);
+		bookFlight.setBounds(21, 390, 399, 40);
 		contentPane.add(bookFlight);
 
 		year = new JTextField();
-		year.setText("2022");
+		year.setText("2023");
 		year.setBounds(57, 57, 50, 26);
 		contentPane.add(year);
 		year.setColumns(10);
@@ -271,14 +348,12 @@ public class FlightBooking23 extends JFrame {
 		lblArrivalCity.setBounds(21, 39, 84, 16);
 		contentPane.add(lblArrivalCity);
 		
-		searchResult.setBounds(86, 170, 314, 16);
+		searchResult.setBounds(64, 142, 314, 16);
 		contentPane.add(searchResult);
 		
 		
 		
-		arrivalComboBox = new JComboBox();
-		arrivalComboBox.setBounds(99, 35, 243, 27);
-		contentPane.add(arrivalComboBox);
+	
 	}
 }  //  @jve:decl-index=0:visual-constraint="18,9"
 
